@@ -4,12 +4,27 @@
     <title>Dice Rolling Simulator</title>
     <style>
         /* CSS code for rolling dice image */
+        #die {
+            width: 100px;
+            height: 100px;
+            background-size: cover;
+            animation-duration: 1s;
+            animation-iteration-count: 1;
+            animation-timing-function: ease-in-out;
+        }
 
-<div id="die" class="roll-animation"></div>
+        .roll-animation {
+            animation-name: roll;
+        }
 
-  }
-}
-
+        @keyframes roll {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 <body>
@@ -26,5 +41,23 @@
             {% endfor %}
         {% endif %}
     </div>
+
+    <div id="die" class="roll-animation"></div>
+
+    <script>
+        // JavaScript code for rolling the die
+        function rollDie() {
+            var die = document.getElementById('die');
+            var result = Math.floor(Math.random() * 6) + 1; // Randomize the result from 1 to 6
+
+            die.style.animation = 'none'; // Reset animation
+            void die.offsetWidth; // Trigger reflow to restart the animation
+
+            die.style.backgroundImage = 'url(' + images + '.png)'; // file name pattern for your die images
+        }
+
+        // Call the rollDie function to display the initial die
+        rollDie();
+    </script>
 </body>
 </html>
