@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dice Rolling Simulator</title>
+    <style>
+        /* Add CSS styles for the webpage layout and visuals */
+    </style>
+</head>
+<body>
+    <h1>Dice Rolling Simulator</h1>
+    <form action="/roll_dice" method="POST">
+        <label for="numDice">Number of Dice:</label>
+        <input type="number" name="numDice">
+        <button type="submit">Roll</button>
+    </form>
+    <div id="results">
+        {% if results %}
+            {% for result in results %}
+                <p>You rolled: {{ result }}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+</body>
+</html>
