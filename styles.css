@@ -1,0 +1,23 @@
+/* CSS code for rolling die */
+
+#die {
+  width: 100px;
+  height: 100px;
+  background-size: cover;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in-out;
+}
+
+.roll-animation {
+  animation-name: roll;
+}
+
+@keyframes roll {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
