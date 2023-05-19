@@ -3,16 +3,26 @@
 # Date started: 5/19/2023
 # Description:
 
+from flask import Flask, render_template, request
 import random
 
-def roll_dice(num_dice):
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/roll_dice', methods=['POST'])
+def roll_dice():
+    num_dice = int(request.form['numDice'])
+    roll_results = []
+
     for _ in range(num_dice):
         roll_result = random.randint(1, 6)
-        print("You rolled:", roll_result)
+        roll_results.append(roll_result)
 
-while True:
-    num_dice = int(input("Enter the number of dice to roll (0 to exit): "))
-    if num_dice == 0:
-        break
-    roll_dice(num_dice)
+    return render_template('index.html', results=roll_results)
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
