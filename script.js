@@ -78,8 +78,23 @@ function resetScores() {
 }
 
 function showConfetti() {
-  jsConfetti.addConfetti();
+  const duration = 6000; // Duration of confetti in milliseconds (6 seconds)
+  const particleCount = 200; // Number of confetti particles
+
+  jsConfetti.addConfetti({
+    confettiRadius: 5,
+    confettiNumber: particleCount,
+    confettiColors: ['#FF9933', '#000000'], // Custom confetti colors (bright orange and black)
+    target: 'confetti-container',
+    startFrom: 0,
+    duration: duration,
+    emoji: '🦫' // Beaver emoji
+  });
 }
+
+
+
+
 
 // Get the necessary elements from the DOM
 const rollPlayerButton = document.getElementById('roll-player-button');

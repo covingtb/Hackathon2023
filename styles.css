@@ -51,8 +51,12 @@ body {
   position: absolute;
   width: 10px;
   height: 10px;
-  background: linear-gradient(to right, red, yellow, green, blue, purple);
-  animation: confetti-fall 4s ease-in infinite;
+  background-color: orange; /* Customize the confetti background color */
+}
+
+.confetti::before,
+.confetti::after {
+  background-color: black; /* Customize the confetti colors */
 }
 
 @keyframes confetti-fall {
@@ -63,3 +67,4 @@ body {
     transform: translateY(100vh) rotateZ(720deg);
   }
 }
+
