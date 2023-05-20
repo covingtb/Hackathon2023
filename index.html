@@ -1,42 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dice Rolling Simulator</title>
-
-    <style>
-        body {
-    background-color: #213a05;
-  }
-  
-  .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  h1, p {
-    color: #FFFFFF;
-    text-align: center;
-  }
-
-    </style>
+  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <center>
-        <h1>Dice Rolling Simulator</h1>
-        <form action="/roll_dice" method="POST">
-            <label for="numDice">Number of Dice:</label>
-            <input type="number" name="numDice">
-            <button type="submit">Roll</button>
-        </form>
-        <div id="results">
-            {% if results %}
-                {% for result in results %}
-                    <p>You rolled: {{ result }}</p>
-                {% endfor %}
-            {% endif %}
-        </div>
-    </center>
+  <h1>Dice Game</h1>
+  <div class="scores">
+    <p id="player-score">Player Score: 0</p>
+    <p id="bot-score">Bot Score: 0</p>
+  </div>
+  <div class="dice-container">
+    <img id="player-dice" src="dice-empty.png" alt="Player Dice">
+    <img id="bot-dice" src="dice-empty.png" alt="Bot Dice">
+  </div>
+  <div class="buttons">
+    <button id="roll-player-button">Roll Player Dice</button>
+    <button id="roll-bot-button">Roll Bot Dice</button>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
