@@ -74,7 +74,7 @@ function showConfetti() {
 const rollPlayerButton = document.getElementById('roll-player-button');
 const rollBotButton = document.getElementById('roll-bot-button');
 
-// Add a click event listener to the "Roll Player Dice" button
+// Add a click event listener to the "Roll Player Dice" button so it listens
 rollPlayerButton.addEventListener('click', rollPlayerDice);
 
 // Add a click event listener to the "Roll Bot Dice" button
