@@ -11,9 +11,8 @@ let playerScore = 0;
 let botScore = 0;
 let playerWins = 0;
 let botWins = 0;
-
+let isFirstRound = true;
 let botRollTimer = null;
-// Flag to track whether the bot is rolling
 let isBotRolling = false;
 
 function rollDice(player) {
@@ -36,17 +35,18 @@ function rollDice(player) {
     isBotRolling = true;
     rollPlayerButton.disabled = true;
 
-    clearTimeout(botRollTimer); // Clear any existing bot roll timer
+    clearTimeout(botRollTimer);
     botRollTimer = setTimeout(() => {
       rollDice('bot');
       isBotRolling = false;
       rollPlayerButton.disabled = false;
-    }, 2000); // Set bot roll delay to 4 seconds (2000 milliseconds)
-  } else if (player === 'bot') {
-    if (loserGoesFirst === 'player') {
-      rollPlayerButton.disabled = false;
+    }, 2000);
+
+    if (!isFirstRound) {
+      document.getElementById('first-player-msg').textContent = 'Bot goes first!';
     }
   }
+  isFirstRound = false;
 }
 
 function checkWinner() {
@@ -55,16 +55,13 @@ function checkWinner() {
     if (playerScore > botScore) {
       winner = 'Player';
       playerWins++;
-      loserGoesFirst = 'bot';
       document.getElementById('player-wins').textContent = `Player Wins: ${playerWins}`;
     } else if (botScore > playerScore) {
       winner = 'Bot';
       botWins++;
-      loserGoesFirst = 'player';
       document.getElementById('bot-wins').textContent = `Bot Wins: ${botWins}`;
     } else {
       winner = 'It\'s a tie';
-      loserGoesFirst = '';
     }
     alert(`Game over! ${winner} wins!`);
     showConfetti();
@@ -93,11 +90,8 @@ function showConfetti() {
   }
 }
 
-// Get the necessary elements from the DOM
 const rollPlayerButton = document.getElementById('roll-player-button');
-const rollBotButton = document.getElementById('roll-bot-button');
 
-// Add a click event listener to the "Roll Player Dice" button
 rollPlayerButton.addEventListener('click', () => {
   if (!isBotRolling) {
     rollDice('player');
