@@ -1,10 +1,10 @@
 const diceImages = [
-  "dice1.png",
-  "dice2.png",
-  "dice3.png",
-  "dice4.png",
-  "dice5.png",
-  "dice6.png"
+  "Dice1.png",
+  "Dice2.png",
+  "Dice3.png",
+  "Dice4.png",
+  "Dice5.png",
+  "Dice6.png"
 ];
 
 let playerScore = 0;
@@ -15,6 +15,8 @@ let botWins = 0;
 let botRollTimer = null;
 // Flag to track whether the bot is rolling
 let isBotRolling = false;
+
+const jsConfetti = new JSConfetti();
 
 function rollDice(player) {
   const diceValue = Math.floor(Math.random() * 6) + 1;
@@ -32,7 +34,7 @@ function rollDice(player) {
 
   checkWinner();
 
-  if (player === 'player') {
+  if (player === 'player' && !isBotRolling) {
     isBotRolling = true;
     rollPlayerButton.disabled = true;
 
@@ -41,7 +43,7 @@ function rollDice(player) {
       rollDice('bot');
       isBotRolling = false;
       rollPlayerButton.disabled = false;
-    }, 2000); // Set bot roll delay to 4 seconds (4000 milliseconds)
+    }, 500); // Set bot roll delay to .5 seconds (500 milliseconds)
   }
 }
 
@@ -75,15 +77,7 @@ function resetScores() {
 }
 
 function showConfetti() {
-  const confettiContainer = document.getElementById('confetti-container');
-  for (let i = 0; i < 100; i++) {
-    const confetti = document.createElement('div');
-    confetti.className = 'confetti';
-    confetti.style.backgroundImage = `url(confetti.png)`;
-    confetti.style.left = `${Math.random() * 100}%`;
-    confetti.style.animationDelay = `${Math.random() * 4}s`;
-    confettiContainer.appendChild(confetti);
-  }
+  jsConfetti.addConfetti();
 }
 
 // Get the necessary elements from the DOM
