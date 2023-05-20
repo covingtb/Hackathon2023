@@ -63,6 +63,7 @@ function checkWinner() {
     if (playerScore > botScore) {
       winner = 'Player';
       playerWins++;
+      createConfetti();
     } else if (botScore > playerScore) {
       winner = 'Bot';
     } else {
@@ -77,6 +78,31 @@ function checkWinner() {
     resetScores();
   }
 }
+
+// Function to create confetti effect
+function createConfetti() {
+  const confettiContainer = document.getElementById('confetti-container');
+
+  for (let i = 0; i < 50; i++) {
+    const diceConfetti = document.createElement('div');
+    diceConfetti.classList.add('dice-confetti');
+
+    const randomNumber = getRandomNumber();
+    if (randomNumber === 1 || randomNumber === 2 || randomNumber === 5) {
+      diceConfetti.classList.add(`dice${randomNumber}-confetti`);
+    } else {
+      // If the random number is not 1, 2, or 5, use dice1.png as a fallback
+      diceConfetti.classList.add('dice1-confetti');
+    }
+
+    const xPos = Math.random() * window.innerWidth;
+    const yPos = Math.random() * window.innerHeight;
+    diceConfetti.style.transform = `translate(${xPos}px, ${yPos}px)`;
+
+    confettiContainer.appendChild(diceConfetti);
+  }
+}
+
 
 // Function to reset scores and dice images
 function resetScores() {
