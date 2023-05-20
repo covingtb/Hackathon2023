@@ -41,7 +41,11 @@ function rollDice(player) {
       rollDice('bot');
       isBotRolling = false;
       rollPlayerButton.disabled = false;
-    }, 2000); // Set bot roll delay to 4 seconds (4000 milliseconds)
+    }, 2000); // Set bot roll delay to 4 seconds (2000 milliseconds)
+  } else if (player === 'bot') {
+    if (loserGoesFirst === 'player') {
+      rollPlayerButton.disabled = false;
+    }
   }
 }
 
@@ -51,13 +55,16 @@ function checkWinner() {
     if (playerScore > botScore) {
       winner = 'Player';
       playerWins++;
+      loserGoesFirst = 'bot';
       document.getElementById('player-wins').textContent = `Player Wins: ${playerWins}`;
     } else if (botScore > playerScore) {
       winner = 'Bot';
       botWins++;
+      loserGoesFirst = 'player';
       document.getElementById('bot-wins').textContent = `Bot Wins: ${botWins}`;
     } else {
       winner = 'It\'s a tie';
+      loserGoesFirst = '';
     }
     alert(`Game over! ${winner} wins!`);
     showConfetti();
