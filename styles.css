@@ -49,12 +49,10 @@ body {
 
 .confetti {
   position: absolute;
-  width: 50px;
-  height: 50px;
-  background-repeat: no-repeat;
-  background-size: cover;
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(to right, red, yellow, green, blue, purple);
   animation: confetti-fall 4s ease-in infinite;
-  background-position: center;
 }
 
 @keyframes confetti-fall {
