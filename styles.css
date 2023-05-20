@@ -54,6 +54,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   animation: confetti-fall 4s ease-in infinite;
+  background-position: center;
 }
 
 @keyframes confetti-fall {
