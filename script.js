@@ -11,8 +11,9 @@ let playerScore = 0;
 let botScore = 0;
 let playerWins = 0;
 let botWins = 0;
-let isFirstRound = true;
+
 let botRollTimer = null;
+// Flag to track whether the bot is rolling
 let isBotRolling = false;
 
 function rollDice(player) {
@@ -35,18 +36,13 @@ function rollDice(player) {
     isBotRolling = true;
     rollPlayerButton.disabled = true;
 
-    clearTimeout(botRollTimer);
+    clearTimeout(botRollTimer); // Clear any existing bot roll timer
     botRollTimer = setTimeout(() => {
       rollDice('bot');
       isBotRolling = false;
       rollPlayerButton.disabled = false;
-    }, 2000);
-
-    if (!isFirstRound) {
-      document.getElementById('first-player-msg').textContent = 'Bot goes first!';
-    }
+    }, 4000); // Set bot roll delay to 4 seconds (4000 milliseconds)
   }
-  isFirstRound = false;
 }
 
 function checkWinner() {
@@ -90,8 +86,11 @@ function showConfetti() {
   }
 }
 
+// Get the necessary elements from the DOM
 const rollPlayerButton = document.getElementById('roll-player-button');
+const rollBotButton = document.getElementById('roll-bot-button');
 
+// Add a click event listener to the "Roll Player Dice" button
 rollPlayerButton.addEventListener('click', () => {
   if (!isBotRolling) {
     rollDice('player');
