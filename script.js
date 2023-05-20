@@ -17,6 +17,7 @@ const playerDice = document.getElementById('player-dice');
 const botDice = document.getElementById('bot-dice');
 const rollPlayerButton = document.getElementById('roll-player-button');
 const rollBotButton = document.getElementById('roll-bot-button');
+const confettiContainer = document.getElementById('confetti-container');
 
 // Function to generate a random number between 1 and 6
 function getRandomNumber() {
@@ -35,8 +36,8 @@ function rollPlayerDice() {
   playerScore += randomNumber;
   document.getElementById('player-score').textContent = `Player Score: ${playerScore}`;
 
-  // Call the AI bot's rollBotDice function
-  rollBotDice();
+  // Call the AI bot's rollBotDice function after a delay
+  setTimeout(rollBotDice, 1000);
 
   checkWinner();
 }
@@ -63,7 +64,6 @@ function checkWinner() {
     if (playerScore > botScore) {
       winner = 'Player';
       playerWins++;
-      createConfetti();
     } else if (botScore > playerScore) {
       winner = 'Bot';
     } else {
@@ -72,37 +72,17 @@ function checkWinner() {
     rounds++;
 
     // Calculate the percentage chance of the user winning
-    const winPercentage = (playerWins / rounds) * 100;
+    const winPercentage = (playerWins / rounds) * 100 || 0;
 
+    // Show confetti effect
+    showConfetti();
+
+    // Display game results
     alert(`Game over! ${winner} wins!\nPlayer Wins: ${playerWins}\nRounds Played: ${rounds}\nWin Percentage: ${winPercentage.toFixed(2)}%`);
+
     resetScores();
   }
 }
-
-// Function to create confetti effect
-function createConfetti() {
-  const confettiContainer = document.getElementById('confetti-container');
-
-  for (let i = 0; i < 50; i++) {
-    const diceConfetti = document.createElement('div');
-    diceConfetti.classList.add('dice-confetti');
-
-    const randomNumber = getRandomNumber();
-    if (randomNumber === 1 || randomNumber === 2 || randomNumber === 5) {
-      diceConfetti.classList.add(`dice${randomNumber}-confetti`);
-    } else {
-      // If the random number is not 1, 2, or 5, use dice1.png as a fallback
-      diceConfetti.classList.add('dice1-confetti');
-    }
-
-    const xPos = Math.random() * window.innerWidth;
-    const yPos = Math.random() * window.innerHeight;
-    diceConfetti.style.transform = `translate(${xPos}px, ${yPos}px)`;
-
-    confettiContainer.appendChild(diceConfetti);
-  }
-}
-
 
 // Function to reset scores and dice images
 function resetScores() {
@@ -114,8 +94,13 @@ function resetScores() {
   botDice.src = 'dice-empty.png';
 }
 
-// Add click event listener to the player roll button
-rollPlayerButton.addEventListener('click', rollPlayerDice);
+// Function to show the confetti effect
+function showConfetti() {
+  const confettiCount = 30;
+  const confettiDuration = 4000; // 4 seconds
 
+  for (let i = 0; i < confettiCount; i++) {
+    const confetti = document.createElement('div');
+   
 
 
