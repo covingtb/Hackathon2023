@@ -25,35 +25,39 @@ function getRandomNumber() {
 
 // Function to roll the player dice and update the score
 function rollPlayerDice() {
-  // Generate a random number between 1 and 6
-  const randomNumber = getRandomNumber();
+  if (playerScore < 20 && botScore < 20) {
+    // Generate a random number between 1 and 6
+    const randomNumber = getRandomNumber();
 
-  // Update the player dice image source
-  playerDice.src = `dice${randomNumber}.png`;
+    // Update the player dice image source
+    playerDice.src = `dice${randomNumber}.png`;
 
-  // Update the player score
-  playerScore += randomNumber;
-  document.getElementById('player-score').textContent = `Player Score: ${playerScore}`;
+    // Update the player score
+    playerScore += randomNumber;
+    document.getElementById('player-score').textContent = `Player Score: ${playerScore}`;
 
-  // Call the AI bot's rollBotDice function
-  rollBotDice();
+    // Call the AI bot's rollBotDice function
+    rollBotDice();
 
-  checkWinner();
+    checkWinner();
+  }
 }
 
 // Function to roll the bot dice and update the score
 function rollBotDice() {
-  // Generate a random number between 1 and 6
-  const randomNumber = getRandomNumber();
+  if (playerScore < 20 && botScore < 20) {
+    // Generate a random number between 1 and 6
+    const randomNumber = getRandomNumber();
 
-  // Update the bot dice image source
-  botDice.src = `dice${randomNumber}.png`;
+    // Update the bot dice image source
+    botDice.src = `dice${randomNumber}.png`;
 
-  // Update the bot score
-  botScore += randomNumber;
-  document.getElementById('bot-score').textContent = `Bot Score: ${botScore}`;
+    // Update the bot score
+    botScore += randomNumber;
+    document.getElementById('bot-score').textContent = `Bot Score: ${botScore}`;
 
-  checkWinner();
+    checkWinner();
+  }
 }
 
 // Function to check the winner and handle game over condition
@@ -68,6 +72,7 @@ function checkWinner() {
     } else {
       winner = 'It\'s a tie';
     }
+
     rounds++;
 
     // Calculate the percentage chance of the user winning
@@ -96,20 +101,7 @@ function resetScores() {
 // Function to trigger confetti effect
 function triggerConfetti() {
   const confettiContainer = document.getElementById('confetti-container');
-  for (let i = 0; i < 20; i++) {
-    const confetti = document.createElement('div');
-    confetti.classList.add('confetti');
-    confetti.style.backgroundImage = `url("dice${[1, 2, 5][Math.floor(Math.random() * 3)]}.png")`;
-    confetti.style.left = `${Math.random() * 100}%`;
-    confetti.style.animationDelay = `${Math.random() * 2}s`;
-    confettiContainer.appendChild(confetti);
-  }
-}
-
-// Add click event listener to the player roll button
-rollPlayerButton.addEventListener('click', function() {
-  rollPlayerDice();
-});
+  for (let i = 0; i < 20; i++)
 
 
 
