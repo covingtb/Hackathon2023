@@ -12,6 +12,8 @@ let botScore = 0;
 let playerWins = 0;
 let botWins = 0;
 
+let botRollTimer = null;
+
 function rollDice(player) {
   const diceValue = Math.floor(Math.random() * 6) + 1;
   const diceImage = diceImages[diceValue - 1];
@@ -27,6 +29,11 @@ function rollDice(player) {
   }
 
   checkWinner();
+
+  if (player === 'player') {
+    clearTimeout(botRollTimer); // Clear any existing bot roll timer
+    botRollTimer = setTimeout(() => rollDice('bot'), 2000);
+  }
 }
 
 function checkWinner() {
@@ -74,32 +81,8 @@ function showConfetti() {
 const rollPlayerButton = document.getElementById('roll-player-button');
 const rollBotButton = document.getElementById('roll-bot-button');
 
-// Add a click event listener to the "Roll Player Dice" button so it listens
-rollPlayerButton.addEventListener('click', rollPlayerDice);
-rollBotButton.addEventListener('click', rollBotDice);
+// Add a click event listener to the "Roll Player Dice" button
+rollPlayerButton.addEventListener('click', () => rollDice('player'));
 
 // Add a click event listener to the "Roll Bot Dice" button
-rollBotButton.addEventListener('click', rollBotDice);
-
-// Function to roll the player dice and update the score
-function rollPlayerDice() {
-  const diceValue = Math.floor(Math.random() * 6) + 1;
-  const diceImage = diceImages[diceValue - 1];
-
-  playerScore += diceValue;
-  document.getElementById('player-score').textContent = `Player Score: ${playerScore}`;
-  document.getElementById('player-dice').src = diceImage;
-
-  checkWinner();
-}
-
-// Function to roll the bot dice and update the score
-function rollBotDice() {
-  const diceValue = Math.floor(Math.random() * 6) + 1;
-  const diceImage = diceImages[diceValue - 1];
-
-  botScore += diceValue;
-  document.getElementById('bot-score').textContent = `Bot Score: ${botScore}`;
-  document.getElementById('bot-dice').src = diceImage;
-    checkWinner();
-}
+rollBotButton.addEventListener('click', () => rollDice('bot'));
