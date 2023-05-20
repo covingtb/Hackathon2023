@@ -2,28 +2,26 @@
 <html>
 <head>
     <title>Dice Rolling Simulator</title>
-
     <style>
         body {
-    background-color: #213a05;
-  }
-  
-  .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  h1, p {
-    color: #FFFFFF;
-    text-align: center;
-  }
+            background-color: #213a05;
+        }
 
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1, p {
+            color: #FFFFFF;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
-    <center>
+    <div class="container">
         <h1>Dice Rolling Simulator</h1>
         <form action="/roll_dice" method="POST">
             <label for="numDice">Number of Dice:</label>
@@ -37,6 +35,6 @@
                 {% endfor %}
             {% endif %}
         </div>
-    </center>
+    </div>
 </body>
 </html>
