@@ -90,5 +90,6 @@ function resetScores() {
 
 // Add click event listener to the player roll button
 rollPlayerButton.addEventListener('click', rollPlayerDice);
+rollBotButton.addEventListener('click', rollBotDice);
 
 
