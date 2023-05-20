@@ -13,6 +13,8 @@ let playerWins = 0;
 let botWins = 0;
 
 let botRollTimer = null;
+// Flag to track whether the bot is rolling
+let isBotRolling = false;
 
 function rollDice(player) {
   const diceValue = Math.floor(Math.random() * 6) + 1;
@@ -31,8 +33,15 @@ function rollDice(player) {
   checkWinner();
 
   if (player === 'player') {
+    isBotRolling = true;
+    rollPlayerButton.disabled = true;
+
     clearTimeout(botRollTimer); // Clear any existing bot roll timer
-    botRollTimer = setTimeout(() => rollDice('bot'), 2000);
+    botRollTimer = setTimeout(() => {
+      rollDice('bot');
+      isBotRolling = false;
+      rollPlayerButton.disabled = false;
+    }, 4000); // Set bot roll delay to 4 seconds (4000 milliseconds)
   }
 }
 
@@ -82,7 +91,16 @@ const rollPlayerButton = document.getElementById('roll-player-button');
 const rollBotButton = document.getElementById('roll-bot-button');
 
 // Add a click event listener to the "Roll Player Dice" button
-rollPlayerButton.addEventListener('click', () => rollDice('player'));
+rollPlayerButton.addEventListener('click', () => {
+  if (!isBotRolling) {
+    rollDice('player');
+  }
+});
 
 // Add a click event listener to the "Roll Bot Dice" button
-rollBotButton.addEventListener('click', () => rollDice('bot'));
+rollBotButton.addEventListener('click', () => {
+  if (!isBotRolling) {
+    rollDice('bot');
+  }
+});
+
