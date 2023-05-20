@@ -32,9 +32,7 @@ function rollDice(player) {
     document.getElementById('bot-dice').src = diceImage;
   }
 
-  checkWinner();
-
-  if (player === 'player' && !isBotRolling) {
+  if (!isBotRolling) {
     isBotRolling = true;
     rollPlayerButton.disabled = true;
 
@@ -43,7 +41,10 @@ function rollDice(player) {
       rollDice('bot');
       isBotRolling = false;
       rollPlayerButton.disabled = false;
-    }, 500); // Set bot roll delay to .5 seconds (500 milliseconds)
+      checkWinner(); // Move the checkWinner() call here
+    }, 1000); // Set bot roll delay to .5 seconds (500 milliseconds)
+  } else {
+    checkWinner(); // Call checkWinner() for the player's roll as well
   }
 }
 
@@ -54,6 +55,7 @@ function checkWinner() {
       winner = 'Player';
       playerWins++;
       document.getElementById('player-wins').textContent = `Player Wins: ${playerWins}`;
+      showConfetti(); // Call showConfetti() when the player wins
     } else if (botScore > playerScore) {
       winner = 'Bot';
       botWins++;
@@ -62,7 +64,6 @@ function checkWinner() {
       winner = 'It\'s a tie';
     }
     alert(`Game over! ${winner} wins!`);
-    showConfetti();
     resetScores();
   }
 }
@@ -90,3 +91,4 @@ rollPlayerButton.addEventListener('click', () => {
     rollDice('player');
   }
 });
+
