@@ -1,10 +1,10 @@
 const diceImages = [
-  "dice1.png",
-  "dice2.png",
-  "dice3.png",
-  "dice4.png",
-  "dice5.png",
-  "dice6.png"
+  "Dice1.png",
+  "Dice2.png",
+  "Dice3.png",
+  "Dice4.png",
+  "Dice5.png",
+  "Dice6.png"
 ];
 
 let playerScore = 0;
