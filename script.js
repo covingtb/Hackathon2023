@@ -9,6 +9,8 @@ const diceImages = [
 
 let playerScore = 0;
 let botScore = 0;
+let rounds = 0;
+let playerWins = 0;
 
 // Get the necessary elements from the DOM
 const playerDice = document.getElementById('player-dice');
@@ -32,6 +34,9 @@ function rollPlayerDice() {
   // Update the player score
   playerScore += randomNumber;
   document.getElementById('player-score').textContent = `Player Score: ${playerScore}`;
+
+  // Call the AI bot's rollBotDice function
+  rollBotDice();
 
   checkWinner();
 }
@@ -57,12 +62,18 @@ function checkWinner() {
     let winner;
     if (playerScore > botScore) {
       winner = 'Player';
+      playerWins++;
     } else if (botScore > playerScore) {
       winner = 'Bot';
     } else {
       winner = 'It\'s a tie';
     }
-    alert(`Game over! ${winner} wins!`);
+    rounds++;
+
+    // Calculate the percentage chance of the user winning
+    const winPercentage = (playerWins / rounds) * 100;
+
+    alert(`Game over! ${winner} wins!\nPlayer Wins: ${playerWins}\nRounds Played: ${rounds}\nWin Percentage: ${winPercentage.toFixed(2)}%`);
     resetScores();
   }
 }
@@ -77,8 +88,8 @@ function resetScores() {
   botDice.src = 'dice-empty.png';
 }
 
-// Add click event listeners to the buttons
+// Add click event listener to the player roll button
 rollPlayerButton.addEventListener('click', rollPlayerDice);
-rollBotButton.addEventListener('click', rollBotDice);
+
 
 
