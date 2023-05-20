@@ -93,9 +93,6 @@ function showConfetti() {
 }
 
 
-
-
-
 // Get the necessary elements from the DOM
 const rollPlayerButton = document.getElementById('roll-player-button');
 const rollBotButton = document.getElementById('roll-bot-button');

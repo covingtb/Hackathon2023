@@ -51,13 +51,15 @@ body {
   position: absolute;
   width: 10px;
   height: 10px;
-  background-color: orange; /* Customize the confetti background color */
+  background-color: orange !important; /* Change the confetti background color to orange */
 }
 
 .confetti::before,
 .confetti::after {
-  background-color: black; /* Customize the confetti colors */
+  content: "🦫" !important; /* Show the beaver emoji as confetti */
+  color: black !important; /* Change the confetti color to black */
 }
+
 
 @keyframes confetti-fall {
   0% {
