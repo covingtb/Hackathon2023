@@ -9,87 +9,90 @@ const diceImages = [
 
 let playerScore = 0;
 let botScore = 0;
-let rounds = 0;
 let playerWins = 0;
+let botWins = 0;
 
-// Get the necessary elements from the DOM
-const playerDice = document.getElementById('player-dice');
-const botDice = document.getElementById('bot-dice');
-const rollPlayerButton = document.getElementById('roll-player-button');
-const rollBotButton = document.getElementById('roll-bot-button');
+let botRollTimer = null;
+// Flag to track whether the bot is rolling
+let isBotRolling = false;
 
-// Function to generate a random number between 1 and 6
-function getRandomNumber() {
-  return Math.floor(Math.random() * 6) + 1;
-}
+function rollDice(player) {
+  const diceValue = Math.floor(Math.random() * 6) + 1;
+  const diceImage = diceImages[diceValue - 1];
 
-// Function to roll the player dice and update the score
-function rollPlayerDice() {
-  // Generate a random number between 1 and 6
-  const randomNumber = getRandomNumber();
-
-  // Update the player dice image source
-  playerDice.src = `dice${randomNumber}.png`;
-
-  // Update the player score
-  playerScore += randomNumber;
-  document.getElementById('player-score').textContent = `Player Score: ${playerScore}`;
-
-  // Call the AI bot's rollBotDice function
-  rollBotDice();
+  if (player === 'player') {
+    playerScore += diceValue;
+    document.getElementById('player-score').textContent = `Player Score: ${playerScore}`;
+    document.getElementById('player-dice').src = diceImage;
+  } else if (player === 'bot') {
+    botScore += diceValue;
+    document.getElementById('bot-score').textContent = `Bot Score: ${botScore}`;
+    document.getElementById('bot-dice').src = diceImage;
+  }
 
   checkWinner();
+
+  if (player === 'player') {
+    isBotRolling = true;
+    rollPlayerButton.disabled = true;
+
+    clearTimeout(botRollTimer); // Clear any existing bot roll timer
+    botRollTimer = setTimeout(() => {
+      rollDice('bot');
+      isBotRolling = false;
+      rollPlayerButton.disabled = false;
+    }, 4000); // Set bot roll delay to 4 seconds (4000 milliseconds)
+  }
 }
 
-// Function to roll the bot dice and update the score
-function rollBotDice() {
-  // Generate a random number between 1 and 6
-  const randomNumber = getRandomNumber();
-
-  // Update the bot dice image source
-  botDice.src = `dice${randomNumber}.png`;
-
-  // Update the bot score
-  botScore += randomNumber;
-  document.getElementById('bot-score').textContent = `Bot Score: ${botScore}`;
-
-  checkWinner();
-}
-
-// Function to check the winner and handle game over condition
 function checkWinner() {
   if (playerScore >= 20 || botScore >= 20) {
     let winner;
     if (playerScore > botScore) {
       winner = 'Player';
       playerWins++;
+      document.getElementById('player-wins').textContent = `Player Wins: ${playerWins}`;
     } else if (botScore > playerScore) {
       winner = 'Bot';
+      botWins++;
+      document.getElementById('bot-wins').textContent = `Bot Wins: ${botWins}`;
     } else {
       winner = 'It\'s a tie';
     }
-    rounds++;
-
-    // Calculate the percentage chance of the user winning
-    const winPercentage = (playerWins / rounds) * 100;
-
-    alert(`Game over! ${winner} wins!\nPlayer Wins: ${playerWins}\nRounds Played: ${rounds}\nWin Percentage: ${winPercentage.toFixed(2)}%`);
+    alert(`Game over! ${winner} wins!`);
+    showConfetti();
     resetScores();
   }
 }
 
-// Function to reset scores and dice images
 function resetScores() {
   playerScore = 0;
   botScore = 0;
   document.getElementById('player-score').textContent = 'Player Score: 0';
   document.getElementById('bot-score').textContent = 'Bot Score: 0';
-  playerDice.src = 'dice-empty.png';
-  botDice.src = 'dice-empty.png';
+  document.getElementById('player-dice').src = 'dice-empty.png';
+  document.getElementById('bot-dice').src = 'dice-empty.png';
 }
 
-// Add click event listener to the player roll button
-rollPlayerButton.addEventListener('click', rollPlayerDice);
-rollBotButton.addEventListener('click', rollBotDice);
+function showConfetti() {
+  const confettiContainer = document.getElementById('confetti-container');
+  for (let i = 0; i < 100; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.backgroundImage = `url(confetti.png)`;
+    confetti.style.left = `${Math.random() * 100}%`;
+    confetti.style.animationDelay = `${Math.random() * 4}s`;
+    confettiContainer.appendChild(confetti);
+  }
+}
 
+// Get the necessary elements from the DOM
+const rollPlayerButton = document.getElementById('roll-player-button');
+const rollBotButton = document.getElementById('roll-bot-button');
 
+// Add a click event listener to the "Roll Player Dice" button
+rollPlayerButton.addEventListener('click', () => {
+  if (!isBotRolling) {
+    rollDice('player');
+  }
+});
