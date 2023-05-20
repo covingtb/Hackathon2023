@@ -78,7 +78,7 @@ function resetScores() {
 }
 
 function showConfetti() {
-  const duration = 6000; // Duration of confetti in milliseconds (6 seconds)
+  const duration = 8000; // Duration of confetti in milliseconds (6 seconds)
   const particleCount = 200; // Number of confetti particles
 
   jsConfetti.addConfetti({
