@@ -17,7 +17,6 @@ const playerDice = document.getElementById('player-dice');
 const botDice = document.getElementById('bot-dice');
 const rollPlayerButton = document.getElementById('roll-player-button');
 const rollBotButton = document.getElementById('roll-bot-button');
-const confettiContainer = document.getElementById('confetti-container');
 
 // Function to generate a random number between 1 and 6
 function getRandomNumber() {
@@ -36,8 +35,8 @@ function rollPlayerDice() {
   playerScore += randomNumber;
   document.getElementById('player-score').textContent = `Player Score: ${playerScore}`;
 
-  // Call the AI bot's rollBotDice function after a delay
-  setTimeout(rollBotDice, 1000);
+  // Call the AI bot's rollBotDice function
+  rollBotDice();
 
   checkWinner();
 }
@@ -72,14 +71,14 @@ function checkWinner() {
     rounds++;
 
     // Calculate the percentage chance of the user winning
-    const winPercentage = (playerWins / rounds) * 100 || 0;
+    const winPercentage = (playerWins / rounds) * 100;
 
-    // Show confetti effect
-    showConfetti();
+    // Trigger confetti effect
+    if (winner === 'Player') {
+      triggerConfetti();
+    }
 
-    // Display game results
     alert(`Game over! ${winner} wins!\nPlayer Wins: ${playerWins}\nRounds Played: ${rounds}\nWin Percentage: ${winPercentage.toFixed(2)}%`);
-
     resetScores();
   }
 }
@@ -94,13 +93,25 @@ function resetScores() {
   botDice.src = 'dice-empty.png';
 }
 
-// Function to show the confetti effect
-function showConfetti() {
-  const confettiCount = 30;
-  const confettiDuration = 4000; // 4 seconds
-
-  for (let i = 0; i < confettiCount; i++) {
+// Function to trigger confetti effect
+function triggerConfetti() {
+  const confettiContainer = document.getElementById('confetti-container');
+  for (let i = 0; i < 20; i++) {
     const confetti = document.createElement('div');
-   
+    confetti.classList.add('confetti');
+    confetti.style.backgroundImage = `url("dice${[1, 2, 5][Math.floor(Math.random() * 3)]}.png")`;
+    confetti.style.left = `${Math.random() * 100}%`;
+    confetti.style.animationDelay = `${Math.random() * 2}s`;
+    confettiContainer.appendChild(confetti);
+  }
+}
+
+// Add click event listener to the player roll button
+rollPlayerButton.addEventListener('click', function() {
+  rollPlayerDice();
+});
+
+
+
 
 
