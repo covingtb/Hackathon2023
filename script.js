@@ -36,6 +36,7 @@ function checkWinner() {
       winner = 'Player';
       playerWins++;
       document.getElementById('player-wins').textContent = `Player Wins: ${playerWins}`;
+      showConfetti(); // Trigger confetti when player wins
     } else if (botScore > playerScore) {
       winner = 'Bot';
       botWins++;
@@ -44,7 +45,6 @@ function checkWinner() {
       winner = 'It\'s a tie';
     }
     alert(`Game over! ${winner} wins!`);
-    showConfetti();
     resetScores();
   }
 }
@@ -68,6 +68,7 @@ function showConfetti() {
     confetti.style.animationDelay = `${Math.random() * 4}s`;
     confettiContainer.appendChild(confetti);
   }
+  confettiContainer.style.display = 'block';
 }
 
 // Get the necessary elements from the DOM
