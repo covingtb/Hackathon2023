@@ -32,7 +32,7 @@ function rollDice(player) {
 
   if (player === 'player') {
     clearTimeout(botRollTimer); // Clear any existing bot roll timer
-    botRollTimer = setTimeout(() => rollDice('bot'), 2000);
+    botRollTimer = setTimeout(() => rollDice('bot'), 4000);
   }
 }
 
