@@ -41,7 +41,7 @@ function rollDice(player) {
       rollDice('bot');
       isBotRolling = false;
       rollPlayerButton.disabled = false;
-    }, 4000); // Set bot roll delay to 4 seconds (4000 milliseconds)
+    }, 2000); // Set bot roll delay to 4 seconds (4000 milliseconds)
   }
 }
 
