@@ -76,6 +76,7 @@ const rollBotButton = document.getElementById('roll-bot-button');
 
 // Add a click event listener to the "Roll Player Dice" button so it listens
 rollPlayerButton.addEventListener('click', rollPlayerDice);
+rollBotButton.addEventListener('click', rollBotDice);
 
 // Add a click event listener to the "Roll Bot Dice" button
 rollBotButton.addEventListener('click', rollBotDice);
