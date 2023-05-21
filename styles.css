@@ -27,7 +27,35 @@ img {
 button {
   margin: 5px;
 }
-
+.bot-container {
+  position: relative;
+}
+/* this is for if we make the speach bubble for the bot, it worked for the prediction so may can help us later */
+.bot-speech-bubble {
+  position: absolute;
+  top: -80px;
+  left: 20px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: none;
+  z-index: 1;
+}
+/* also for speech bubble for bot */
+.bot-speech-bubble::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -10px;
+  transform: translateY(-50%);
+  border-style: solid;
+  border-width: 10px;
+  border-color: transparent transparent transparent #fff;
+}
+#bot-dialog {
+  font-weight: bold;
+}
 body {
   background-image: url("dice_background.jpg");
   background-repeat: no-repeat;
@@ -51,22 +79,14 @@ body {
   position: absolute;
   width: 10px;
   height: 10px;
-  background-color: orange !important; /* Change the confetti background color to orange */
-}
-
-.confetti::before,
-.confetti::after {
-  content: "🦫" !important; /* Show the beaver emoji as confetti */
-  color: black !important; /* Change the confetti color to black */
+  background-image: url("confetti.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  left: 0;
+  animation: confetti-fall 5s infinite;
 }
 
 
-@keyframes confetti-fall {
-  0% {
-    transform: translateY(-100vh) rotateZ(0);
-  }
-  100% {
-    transform: translateY(100vh) rotateZ(720deg);
-  }
-}
+
+
 

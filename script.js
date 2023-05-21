@@ -16,7 +16,6 @@ let botRollTimer = null;
 // Flag to track whether the bot is rolling
 let isBotRolling = false;
 
-const jsConfetti = new JSConfetti();
 
 function rollDice(player) {
   const diceValue = Math.floor(Math.random() * 6) + 1;
@@ -61,9 +60,10 @@ function checkWinner() {
       botWins++;
       document.getElementById('bot-wins').textContent = `Bot Wins: ${botWins}`;
     } else {
-      winner = 'It\'s a tie';
+      winner = 'Everyone';
     }
     alert(`Game over! ${winner} wins!`);
+    showConfetti();
     resetScores();
   }
 }
@@ -75,23 +75,26 @@ function resetScores() {
   document.getElementById('bot-score').textContent = 'Bot Score: 0';
   document.getElementById('player-dice').src = 'dice-empty.png';
   document.getElementById('bot-dice').src = 'dice-empty.png';
+  removeConfetti();
 }
 
 function showConfetti() {
-  const duration = 8000; // Duration of confetti in milliseconds (6 seconds)
-  const particleCount = 200; // Number of confetti particles
-
-  jsConfetti.addConfetti({
-    confettiRadius: 5,
-    confettiNumber: particleCount,
-    confettiColors: ['#FF9933', '#000000'], // Custom confetti colors (bright orange and black)
-    target: 'confetti-container',
-    startFrom: 0,
-    duration: duration,
-    emoji: '🦫' // Beaver emoji
-  });
+  const confettiContainer = document.getElementById('confetti-container');
+  for (let i = 0; i < 100; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.backgroundImage = `url(confetti.png)`;
+    confetti.style.left = `${Math.random() * 100}%`;
+    confetti.style.animationDelay = `${Math.random() * 4}s`;
+    confettiContainer.appendChild(confetti);
+  }
 }
-
+function removeConfetti() {
+  const confettiContainer = document.getElementById('confetti-container');
+  while (confettiContainer.firstChild) {
+    confettiContainer.removeChild(confettiContainer.firstChild);
+  }
+}
 
 // Get the necessary elements from the DOM
 const rollPlayerButton = document.getElementById('roll-player-button');
@@ -103,4 +106,12 @@ rollPlayerButton.addEventListener('click', () => {
     rollDice('player');
   }
 });
+//this was when I was trying to get it to make a preduction, I am leaving the code here because it may help if we want to write a speach bubble
+function updateBot() {
+  const probability = calculateProbability(playerScore, botScore);
+  const botPrediction = document.getElementById('bot-prediction');
 
+  if (probability >= 0.51) {
+    botPrediction.textContent = 'I predict Player to win';
+  }
+}
