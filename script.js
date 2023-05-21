@@ -13,9 +13,7 @@ let playerWins = 0;
 let botWins = 0;
 
 let botRollTimer = null;
-// Flag to track whether the bot is rolling
 let isBotRolling = false;
-
 
 function rollDice(player) {
   const diceValue = Math.floor(Math.random() * 6) + 1;
@@ -35,15 +33,15 @@ function rollDice(player) {
     isBotRolling = true;
     rollPlayerButton.disabled = true;
 
-    clearTimeout(botRollTimer); // Clear any existing bot roll timer
+    clearTimeout(botRollTimer);
     botRollTimer = setTimeout(() => {
       rollDice('bot');
       isBotRolling = false;
       rollPlayerButton.disabled = false;
-      checkWinner(); // Move the checkWinner() call here
-    }, 1000); // Set bot roll delay to .5 seconds (500 milliseconds)
+      checkWinner();
+    }, 1000);
   } else {
-    checkWinner(); // Call checkWinner() for the player's roll as well
+    checkWinner();
   }
 }
 
@@ -54,7 +52,6 @@ function checkWinner() {
       winner = 'Player';
       playerWins++;
       document.getElementById('player-wins').textContent = `Player Wins: ${playerWins}`;
-      showConfetti(); // Call showConfetti() when the player wins
     } else if (botScore > playerScore) {
       winner = 'Bot';
       botWins++;
@@ -62,9 +59,17 @@ function checkWinner() {
     } else {
       winner = 'Everyone';
     }
-    alert(`Game over! ${winner} wins!`);
+
+    const dialog = document.getElementById('winner-dialog');
+    const dialogText = dialog.querySelector('.dialog-text');
+    dialogText.textContent = `Game over! ${winner} wins!`;
+
+    dialog.showModal();
     showConfetti();
-    resetScores();
+    setTimeout(() => {
+      dialog.close();
+      resetScores();
+    }, 5000);
   }
 }
 
@@ -80,18 +85,21 @@ function resetScores() {
 
 function showConfetti() {
   const confettiContainer = document.getElementById('confetti-container');
-  for (let i = 0; i < 100; i++) {
+  const confettiCount = 50;
+
+  for (let i = 0; i < confettiCount; i++) {
     const confetti = document.createElement('div');
-    confetti.className = 'confetti';
-    confetti.style.backgroundImage = `url(confetti.png)`;
+    confetti.classList.add('confetti');
     confetti.style.left = `${Math.random() * 100}%`;
-    confetti.style.animationDelay = `${Math.random() * 4}s`;
+    confetti.style.animationDelay = `${Math.random() * 3}s`;
     confettiContainer.appendChild(confetti);
   }
 }
+
 function removeConfetti() {
   const confettiContainer = document.getElementById('confetti-container');
   while (confettiContainer.firstChild) {
+    confettiContainer.removeChild(confettiContainer.firstChild)
     confettiContainer.removeChild(confettiContainer.firstChild);
   }
 }
@@ -106,12 +114,11 @@ rollPlayerButton.addEventListener('click', () => {
     rollDice('player');
   }
 });
-//this was when I was trying to get it to make a preduction, I am leaving the code here because it may help if we want to write a speach bubble
-function updateBot() {
-  const probability = calculateProbability(playerScore, botScore);
-  const botPrediction = document.getElementById('bot-prediction');
 
-  if (probability >= 0.51) {
-    botPrediction.textContent = 'I predict Player to win';
-  }
-}
+// Add a click event listener to the "Close" button in the winner dialog
+const dialogCloseButton = document.getElementById('dialog-close-button');
+dialogCloseButton.addEventListener('click', () => {
+  const dialog = document.getElementById('winner-dialog');
+  dialog.close();
+  resetScores();
+});

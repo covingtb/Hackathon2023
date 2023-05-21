@@ -61,30 +61,26 @@ body {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+  overflow: hidden; /* Add this line to hide overflowing content */
 }
 
-/* Confetti effect */
-#confetti-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 9999;
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-100vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 .confetti {
   position: absolute;
   width: 10px;
   height: 10px;
-  background-image: url("confetti.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  left: 0;
-  animation: confetti-fall 5s infinite;
+  background-color: #ff0000; /* Replace with your desired confetti color */
+  animation: confetti-fall 3s ease-in-out;
 }
+
 
 
 
